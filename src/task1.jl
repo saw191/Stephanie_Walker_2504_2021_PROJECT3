@@ -14,7 +14,7 @@ price_summary = summarystats(df.Price)
 prices = groupby(df, :Price)
 price_count = combine(prices, nrow => :Count)
 #plot of prices
-price_plot = scatter(price_count.Price, price_count.Count, ylabel = "Price Count", ylim = [0,300];  xlabel = "Price ($)", title="Price Frequency Scatterplot", legend = false)
+price_plot = scatter(price_count.Price, price_count.Count, ylabel = "Price Count", ylim = [0,300];  xlabel = "Price", title="Price Frequency Scatterplot", legend = false)
 
 #method stat summary
 method_group = groupby(df, :Method)
@@ -24,8 +24,14 @@ x = method_summary.Method
 y = method_summary.Count
 method_plot = plot(x, y, seriestype = :bar, legend=false, xlabel="Sales Method", ylabel="Count", title="Sales method plot")
 
-# distance 
-#distance_summary = summarystats(df.Distance)
+#distance 
+distance_grouping= sort(combine(distance_group, nrow => :Count))
+distance_updated = distance_grouping[distance_grouping[!,:Distance].!="#N/A",:] #removed the #N/A value to plot
+distance_updated.Distance = parse.(Float64, distance_updated.Distance) #change String to Float to get summary statistics
+#distance summary statistics
+distance_summary = summarystats(distance_updated.Distance)
+#distance plot
+distance_plot = histogram(distance_updated.Distance, legend=false, xlabel="Distance", ylabel = "Density", title="Distance summary histogram", normed=true)
 
 # landsize
 #landsize_summary = summarystats(df.Landsize)
@@ -36,8 +42,8 @@ method_plot = plot(x, y, seriestype = :bar, legend=false, xlabel="Sales Method",
 @show(price_plot)
 @show(method_summary)
 @show(method_plot)
-#@show(distance_summary)
-#@show(distance_plot)
+@show(distance_summary)
+@show(distance_plot)
 #@show(landsize_summary)
 #@show(landsize_plot)
 
