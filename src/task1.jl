@@ -36,7 +36,7 @@ distance_updated.Distance = parse.(Float64, distance_updated.Distance) #change S
 #Distance summary statistics
 distance_summary = summarystats(distance_updated.Distance)
 #Distance plot
-distance_plot = histogram(distance_updated.Distance, legend=false, xlabel="Distance", ylabel = "Density", title="Distance summary histogram", normed=true)
+distance_plot = histogram(distance_updated.Distance, legend=false, xlabel="Distance", ylabel = "Density", ylim=(0,0.06), title="Distance summary histogram", bins=80,  normed=true)
 
 #Landsize
 #Landsize summary statistics
@@ -47,16 +47,16 @@ landsize_summary_updated = summarystats(df_updated.Landsize)
 landsize_grouping = sort(combine(groupby(df_updated, :Landsize), nrow => :Count))
 df_updated.Landsize = df_updated[!, :Landsize]
 #Landsize plot
-landsize_plot = scatter(df_updated.Landsize, landsize_grouping.Count, ylabel = "Count", xlabel = "Landsize", title="Landsize plot", legend = false)
+landsize_plot = scatter(df_updated.Landsize, landsize_grouping.Count, ylabel = "Count", xlabel = "Landsize", title="Landsize plot", legend = false,)
 
 #Summary statistics and plots for all required variables 
 @show(room_summary)
-@show(room_plot)
+display(room_plot)
 @show(price_summary)
-@show(price_plot)
+display(price_plot)
 @show(method_summary)
-@show(method_plot)
+display(method_plot)
 @show(distance_summary)
-@show(distance_plot)
+display(distance_plot)
 @show(landsize_summary_updated)
-@show(landsize_plot)
+display(landsize_plot)
