@@ -11,4 +11,4 @@ How to run:
 
 Check dependencies to ensure all packages are installed.
 
-Run task 1.jl to get summaries and plots for all single variables.
+Navigate to tasks folder and select each task, e.g. task 1.jl.

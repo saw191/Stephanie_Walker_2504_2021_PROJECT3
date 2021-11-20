@@ -1,11 +1,11 @@
-
+include("../src/dependencies.jl")
 #Rooms
 #Rooms summary statistics
 room_summary = summarystats(df.Rooms)
 #groupings
 room_no_outlier = df[df[!, :Rooms].!==16,:]
 #Rooms plot
-room_plot = histogram(room_no_outlier.Rooms,legend=false, xlabel="No of Rooms", ylabel="Frequency", title="Rooms plot with no outlier",  ylim = (0, 4000), palette=:greens)
+room_plot = histogram(room_no_outlier.Rooms,legend=false, xlabel="No of Rooms", ylabel="Frequency", title="Rooms plot with no outlier", ylim=(0,1.8*10^4), palette=:greens)
 savefig(room_plot, "room_plot.png")
 
 #Price

@@ -5,5 +5,3 @@ data_from_web = HTTP.request("GET", "https://raw.githubusercontent.com/saw191/"*
 string_from_web = String(data_from_web.body);
 
 df = CSV.read(IOBuffer(string_from_web), DataFrame)
-
-include("task1.jl")
