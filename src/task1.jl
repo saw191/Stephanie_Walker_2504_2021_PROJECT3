@@ -1,6 +1,7 @@
 
 #Rooms
 #Rooms summary statistics
+room_summary = summarystats(df.Rooms)
 #Rooms plot
 room_plot = histogram(df.Rooms,legend=false, xlabel="No of Rooms", ylabel="Density", title="Rooms plot with outlier", bins=30, normed=true)
 #groupings
@@ -28,7 +29,8 @@ method_plot = plot(x, y, seriestype = :bar, legend=false, xlabel="Sales Method",
 
 #Distance
 #Distance grouping
-distance_grouping= sort(combine(distance_group, nrow => :Count))
+distance_group = groupby(df, :Distance)
+distance_grouping = sort(combine(distance_group, nrow => :Count))
 distance_updated = distance_grouping[distance_grouping[!,:Distance].!="#N/A",:] #removed the #N/A value to plot
 distance_updated.Distance = parse.(Float64, distance_updated.Distance) #change String to Float to get summary statistics
 #Distance summary statistics
@@ -43,8 +45,7 @@ df_updated = dropmissing!(df)
 landsize_summary_updated = summarystats(df_updated.Landsize)
 #Landsize grouping
 landsize_grouping = sort(combine(groupby(df_updated, :Landsize), nrow => :Count))
-landsize_updated = landsize_grouping[landsize_grouping[!, :Landsize].!=0, :]
-df_updated.Landsize = landsize_updated[!, :Landsize]
+df_updated.Landsize = df_updated[!, :Landsize]
 #Landsize plot
 landsize_plot = scatter(df_updated.Landsize, landsize_grouping.Count, ylabel = "Count", xlabel = "Landsize", title="Landsize plot", legend = false)
 
@@ -59,4 +60,3 @@ landsize_plot = scatter(df_updated.Landsize, landsize_grouping.Count, ylabel = "
 @show(distance_plot)
 @show(landsize_summary_updated)
 @show(landsize_plot)
-
